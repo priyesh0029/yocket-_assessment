@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setStage, setCurrentCop } from '../Features/gameSlice';
+import { setStage, setCurrentCop } from '../store/slices/gameSlice';
 
 const CopSelectionPage = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const CopSelectionPage = () => {
   };
 
   return (
-    <div className="page cop-selection">
+    <div className=" cop-selection">
       <div className="description">
         <h1>Select a Cop</h1>
         <p>Select a cop to assign them a city and a vehicle.</p>

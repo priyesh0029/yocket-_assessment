@@ -1,6 +1,6 @@
 
 import { useDispatch } from 'react-redux';
-import { setStage } from '../Features/gameSlice';
+import { setStage } from '../store/slices/gameSlice';
 
 const LandingPage = () => {
   const dispatch = useDispatch();

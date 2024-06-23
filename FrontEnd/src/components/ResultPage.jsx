@@ -5,7 +5,7 @@ const ResultPage = () => {
   const result = useSelector((state) => state.game.result);
 
   return (
-    <div className="page result">
+    <div className=" result">
       <h1>Result</h1>
       {result ? (
         result.success ? (
