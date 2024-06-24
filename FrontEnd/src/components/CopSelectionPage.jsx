@@ -1,149 +1,5 @@
 /* eslint-disable react/prop-types */
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   setStage,
-//   setCurrentCop,
-//   setCopSelections,
-// } from "../store/slices/gameSlice";
-// import { CLOUD_URL, COP_PAGE_BACKGROUND } from "../constants/imageUrl";
-// import { Carousel } from "react-responsive-carousel";
-// import "react-responsive-carousel/lib/styles/carousel.min.css";
-// // import { useState } from "react";
-
-// const CopSelectionPage = ({
-//   currPage,
-//   prevPage,
-//   nextPage,
-//   pageInfo,
-//   pageDesc,
-// }) => {
-//   const dispatch = useDispatch();
-//   const { currentCop, copSelections } = useSelector((state) => state.game);
-//   // const [selectedCity, setSelectedCity] = useState("");
-
-//   const selectionFunction = (info) => {
-//     if (currPage === "copSelection") {
-//       console.log("cop selected");
-//       dispatch(setCurrentCop(info));
-//       dispatch(setStage(nextPage));
-//     } else if (currPage === "citySelection") {
-//       handleCitySelect(info);
-//     }
-//   };
-
-//   const handleBackButton = () => {
-//     dispatch(setStage(prevPage));
-//   };
-
-//   const handleCitySelect = (city) => {
-//     const selection = copSelections.find((copInfo) => copInfo.city === city);
-
-//     if (selection && selection.copName !== currentCop) {
-//       console.log("copSelections : ", selection);
-//       alert(`${city} already selected by ${selection.copName}!`);
-//     } else {
-//       // setSelectedCity(city);
-//       handleCitySubmit(city);
-//     }
-//   };
-
-//   const handleCitySubmit = (city) => {
-//     const existingCop = copSelections.filter(
-//       (copInfo) => copInfo.copName !== currentCop
-//     );
-//     const newSelections = [...existingCop, { copName: currentCop, city: city }];
-//     dispatch(setCopSelections(newSelections));
-//     dispatch(setStage(nextPage));
-//   };
-
-//   return (
-//     <div
-//       className="h-screen w-screen flex items-center justify-center"
-//       style={{
-//         backgroundImage: `url(${COP_PAGE_BACKGROUND})`,
-//         backgroundSize: "cover",
-//         backgroundPosition: "center",
-//       }}
-//     >
-//       <div className="bg-gray-900 bg-opacity-80 rounded-lg shadow-lg overflow-hidden w-full h-full mx-4 flex md:flex-row flex-col">
-//         {/* Left side */}
-//         <div className="md:w-1/3 w-full md:h-full h-1/2 p-8 flex flex-col">
-//           <div>
-//             <button
-//               className="text-white border rounded-xl shadow-xl border-gray-200 py-1 md:py-2 px-3 text-md md:text-xl mb-4"
-//               onClick={handleBackButton}
-//             >
-//               {"<--"} Back
-//             </button>
-//           </div>
-//           <h1 className="md:text-4xl sm:text-2xl text-xl font-bold mb-4 text-white">
-//             {pageDesc.title}
-//           </h1>
-//           <p className="text-sm text-white">{pageDesc.desc}</p>
-//         </div>
-
-//         {/* Right side */}
-//         <div className="md:w-2/3 w-full md:h-full h-1/2  flex items-center justify-center">
-//           <Carousel
-//             showThumbs={false}
-//             infiniteLoop={true}
-//             showStatus={false}
-//             autoPlay={false}
-//             interval={3000}
-//             className="w-full h-full md:h-full flex justify-center p-4 "
-//           >
-//             {pageInfo.map((info, idx) => (
-//               <div
-//                 key={idx}
-//                 className={`relative ${
-//                   currPage === "copSelection"
-//                     ? "w-full h-[32%] sm:h-[20%] md:h-[40%] lg:h-[30%]"
-//                     : ""
-//                 }  flex items-center justify-center`}
-//                 onClick={() => selectionFunction(info.name)}
-//               >
-//                 <img
-//                   src={
-//                     currPage === "copSelection"
-//                       ? info.image
-//                       : `${CLOUD_URL + info.image}.png`
-//                   }
-//                   alt={"image" + idx}
-//                   className="object-contain h-full w-full"
-//                 />
-//                 <div
-//                   className={`absolute inset-0 flex cursor-pointer bg-black bg-opacity-25 ${
-//                     currPage === "copSelection" ||
-//                     currPage === "vehicleSelection"
-//                       ? ""
-//                       : "flex-col"
-//                   }`}
-//                 >
-//                   <div className=" sm:mx-24 mx-6 mt-6">
-//                     <p className="text-white text-md sm:text-xl md:text-2xl lg:text-3xl font-bold">
-//                       {info.name}
-//                     </p>
-//                     {currPage !== "copSelection" && (
-//                       <div className="text-white mt-16 md:mt-36  bg-black bg-opacity-35 rounded-xl py-2">
-//                         <p className="text-white text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold">
-//                           {info.subHead}
-//                         </p>
-//                         <p className="text-white text-xs mt-2">{info.desc}</p>
-//                       </div>
-//                     )}
-//                   </div>
-//                 </div>
-//               </div>
-//             ))}
-//           </Carousel>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CopSelectionPage;
-
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setStage,
@@ -171,26 +27,52 @@ const CopSelectionPage = ({
     (state) => state.game
   );
 
+  const [animationClass, setAnimationClass] = useState("");
+
   const selectionFunction = (info) => {
-    if (currPage === "copSelection") {
-      console.log("cop selected");
-      dispatch(setCurrentCop(info.name));
-      dispatch(setStage(nextPage));
-    } else if (currPage === "citySelection") {
-      handleCitySelect(info.name);
-    } else if (currPage === "vehicleSelection") {
-      const selection = handleSelection(
-        currentCop,
-        info,
-        cities,
-        copSelections
-      );
-      if (!selection.status) {
-        alert(selection.message);
-      } else {
-        handleVehicleSubmit(info.name);
+    setAnimationClass("page-leave");
+    setTimeout(() => {
+      if (currPage === "copSelection") {
+        console.log("cop selected");
+        dispatch(setCurrentCop(info.name));
+        dispatch(setStage(nextPage));
+      } else if (currPage === "citySelection") {
+        handleCitySelect(info.name);
+      } else if (currPage === "vehicleSelection") {
+        const selection = handleSelection(
+          currentCop,
+          info,
+          cities,
+          copSelections
+        );
+        if (!selection.status) {
+          alert(selection.message);
+        } else {
+          handleVehicleSubmit(info.name);
+        }
       }
+      setAnimationClass("page-enter");
+    }, 500); 
+  };
+
+  const handleCitySelect = (city) => {
+    const selection = copSelections.find((copInfo) => copInfo.city === city);
+
+    if (selection && selection.copName !== currentCop) {
+      console.log("copSelections : ", selection);
+      alert(`${city} already selected by ${selection.copName}!`);
+    } else {
+      handleCitySubmit(city);
     }
+  };
+
+  const handleCitySubmit = (city) => {
+    const existingCop = copSelections.filter(
+      (copInfo) => copInfo.copName !== currentCop
+    );
+    const newSelections = [...existingCop, { copName: currentCop, city: city }];
+    dispatch(setCopSelections(newSelections));
+    dispatch(setStage(nextPage));
   };
 
   const handleVehicleSubmit = async (vehicleName) => {
@@ -221,32 +103,20 @@ const CopSelectionPage = ({
   };
 
   const handleBackButton = () => {
-    dispatch(setStage(prevPage));
+    setAnimationClass("page-leave");
+    setTimeout(() => {
+      dispatch(setStage(prevPage));
+      setAnimationClass("page-enter");
+    }, 500);
   };
 
-  const handleCitySelect = (city) => {
-    const selection = copSelections.find((copInfo) => copInfo.city === city);
-
-    if (selection && selection.copName !== currentCop) {
-      console.log("copSelections : ", selection);
-      alert(`${city} already selected by ${selection.copName}!`);
-    } else {
-      handleCitySubmit(city);
-    }
-  };
-
-  const handleCitySubmit = (city) => {
-    const existingCop = copSelections.filter(
-      (copInfo) => copInfo.copName !== currentCop
-    );
-    const newSelections = [...existingCop, { copName: currentCop, city: city }];
-    dispatch(setCopSelections(newSelections));
-    dispatch(setStage(nextPage));
-  };
+  useEffect(() => {
+    setAnimationClass("page-enter");
+  }, [currPage]);
 
   return (
     <div
-      className="h-screen w-screen flex items-center justify-center"
+      className={`h-screen w-screen flex items-center justify-center ${animationClass}`}
       style={{
         backgroundImage: `url(${COP_PAGE_BACKGROUND})`,
         backgroundSize: "cover",
@@ -276,7 +146,6 @@ const CopSelectionPage = ({
           {copSelections.length !== 0 && (
             <div className="sm:flex flex-col gap-2 mt-5 hidden">
               {copSelections.map((copInfo, index) => (
-                // console.log("copInfo in map : ",copInfo)
                 <p
                   key={copInfo.copName}
                   className="text-yellow-900 text-xs text-center  bg-black bg-opacity-70 rounded-xl p-2"
@@ -328,20 +197,22 @@ const CopSelectionPage = ({
                       {info.name}
                     </p>
                     {currPage !== "copSelection" && (
-                      
-                        <div className="text-white mt-12 sm:mt-16 md:mt-36 bg-black bg-opacity-35 rounded-xl py-2">
-                          <p className="text-white text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold">
-                            {info.subHead}
+                      <div className="text-white mt-12 sm:mt-16 md:mt-36 bg-black bg-opacity-35 rounded-xl py-2">
+                        <p className="text-white text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold">
+                          {info.subHead}
+                        </p>
+                        {currPage === "citySelection" && (
+                          <p className="text-white text-xs mt-2">
+                            {info.desc}
                           </p>
-                          {currPage === "citySelection" &&(<p className="text-white text-xs mt-2">{info.desc}</p>)}
-                          {/* eslint-disable-next-line react/no-unescaped-entities */}
-                          <p className="text-white font-semibold text-sm md:text-md mt-2 px-2">
-                            {currPage === "citySelection"
-                              ? `${info.distance}km from the cop's location`
-                              : `This ${info.name} has ${info.range} Kms range`}
-                          </p>
-                        </div>
-                      
+                        )}
+                        {/* eslint-disable-next-line react/no-unescaped-entities */}
+                        <p className="text-white font-semibold text-sm md:text-md mt-2 px-2">
+                          {currPage === "citySelection"
+                            ? `${info.distance}km from the cop's location`
+                            : `This ${info.name} has ${info.range} Kms range`}
+                        </p>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -355,3 +226,5 @@ const CopSelectionPage = ({
 };
 
 export default CopSelectionPage;
+
+

@@ -4,4 +4,5 @@ export const COP1_IMG = "https://res.cloudinary.com/dsinpyvxb/image/upload/v1719
 export const COP2_IMG = "https://res.cloudinary.com/dsinpyvxb/image/upload/v1719188914/Manhunt:%20Shadowed%20Pursuit/female-cop-in-uniform-demonstrating-intelligence-and-beauty-striking-a-strong-confident-pose-high-197329566_sjahjt.png"
 export const COP3_IMG = "https://res.cloudinary.com/dsinpyvxb/image/upload/v1719188955/Manhunt:%20Shadowed%20Pursuit/J9f3-dVoJ6cESdb-Vq9le_cz4qgw.png"
 export const CLOUD_URL  = "https://res.cloudinary.com/dsinpyvxb/image/upload/"
-
+export const CAPTURE_IMG_URL = "https://res.cloudinary.com/dsinpyvxb/image/upload/v1719270205/Manhunt:%20Shadowed%20Pursuit/fl9-48-WiYv4hkyrsRdum_luepkd.png"
+export const FUGITIVE_IMAGE = "https://res.cloudinary.com/dsinpyvxb/image/upload/v1719270205/Manhunt:%20Shadowed%20Pursuit/1M3gK0k2eyP6_96o_ytce_1_kguvyk.png"

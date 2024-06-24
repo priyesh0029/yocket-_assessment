@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 import { setStage } from "../store/slices/gameSlice";
 import { LANDING_PAGE_IMAGE } from "../constants/imageUrl";
-import { useState } from "react"; // Import useState hook
+import { useState } from "react"; 
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  const [hovered, setHovered] = useState(false); // State for button hover
+  const [hovered, setHovered] = useState(false);
 
   const startGame = () => {
     dispatch(setStage("copSelection"));
@@ -22,8 +22,8 @@ const LandingPage = () => {
           <span className="text-yellow-900">THE SHADOWED PURSUIT</span>
         </h1>
         <button
-          className={`bg-green-900 md:text-2xl text-md text-white font-bold md:py-3 md:px-10 py-1 px-8 rounded-2xl bottom-0 md:right-4 right-0 absolute m-8  transition duration-300 ease-in-out ${
-            hovered ? "hover:bg-green-700 scale-110" : "hover:bg-green-800"
+          className={`bg-yellow-900 md:text-2xl text-md  font-bold md:py-3 md:px-10 py-1 px-8 rounded-2xl bottom-0 md:right-4 right-0 absolute m-8  transition duration-300 ease-in-out ${
+            hovered ? "hover:bg-yellow-700 scale-110 text-black" : "hover:bg-yellow-800 text-white"
           }`}
           onClick={startGame}
           onMouseEnter={() => setHovered(true)}

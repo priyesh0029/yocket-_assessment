@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 export const captureResult = async (copsDetails) => {
   try {
+    console.log("copsDetails in capture api call : ",copsDetails);
     const response = await axios.post(`${BASE_URL}/capture`, copsDetails);
     return response;
   } catch (error) {

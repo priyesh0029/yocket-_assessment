@@ -3,9 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCities, setVehicles } from "./store/slices/gameSlice";
 import LandingPage from "./components/LandingPage";
 import CopSelectionPage from "./components/CopSelectionPage";
-// import CitySelectionPage from "./components/CitySelectionPage";
-// import VehicleSelectionPage from "./components/VehicleSelectionPage";
-import ResultPage from "./components/ResultPage";
 import "./App.css";
 import { getCitiesData } from "./services/homeApis/getCities";
 import { getVehiclesData } from "./services/homeApis/getVehicles";
@@ -14,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { copsDescription, copsInfo } from "./constants/copsPageDetails";
 import { cityDescription } from "./constants/cityDetails";
 import { vehicleDescription } from "./constants/vehicleDetails";
+import ResultPage from "./components/ResultPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -77,7 +75,6 @@ const App = () => {
           />
         );
       case "vehicleSelection":
-        // return <VehicleSelectionPage />;
         return (
           <CopSelectionPage
             currPage={"vehicleSelection"}
@@ -89,6 +86,7 @@ const App = () => {
         );
       case "result":
         return <ResultPage />;
+
       default:
         return <LandingPage />;
     }
