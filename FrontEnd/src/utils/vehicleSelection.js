@@ -22,7 +22,6 @@ export const handleSelection = (
     return vehicleCheck;
   }
 
-  // copSelections.push({ copName, vehicle: vehicleKind });
   return { status: true };
 };
 const canVehicleMakeRoundTrip = (cityDistance, vehicleRange) => {
@@ -32,7 +31,7 @@ const canVehicleMakeRoundTrip = (cityDistance, vehicleRange) => {
 //  check already selected vehicle and handle edge cases
 const isVehicleAlreadySelected = (vehicleInfo, copSelections) => {
   const selectedCops = copSelections.filter(
-    (cop) => cop.vehicle === vehicleInfo.kind
+    (cop) => cop.vehicle === vehicleInfo.name
   );
 
   if (selectedCops.length >= vehicleInfo.count) {

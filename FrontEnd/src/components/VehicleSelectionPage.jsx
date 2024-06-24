@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setStage, setCopSelections, setResult } from "../store/slices/gameSlice";
+import {
+  setStage,
+  setCopSelections,
+  setResult,
+} from "../store/slices/gameSlice";
 // import axios from "axios";
 import { handleSelection } from "../utils/vehicleSelection";
 import { captureResult } from "../services/resultApis/captureResult";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const VehicleSelectionPage = () => {
   const dispatch = useDispatch();
@@ -14,11 +18,16 @@ const VehicleSelectionPage = () => {
   );
   const [selectedVehicle, setSelectedVehicle] = useState("");
   const handleVehicleSelect = (vehicleInfo) => {
-    const selection = handleSelection(currentCop,vehicleInfo,cities,copSelections);
+    const selection = handleSelection(
+      currentCop,
+      vehicleInfo,
+      cities,
+      copSelections
+    );
     if (!selection.status) {
       alert(selection.message);
     } else {
-      setSelectedVehicle(vehicleInfo.kind);
+      setSelectedVehicle(vehicleInfo.name);
     }
   };
 
@@ -33,13 +42,8 @@ const VehicleSelectionPage = () => {
       dispatch(setStage("copSelection"));
     } else {
       console.log("body data before sending the request : ", newSelections);
-      // const response = await axios.post(
-      //   "http://localhost:3000/capture",
-      //   newSelections
-      // );
-      handleCaptureResult(newSelections)
-      // dispatch(setResult(response.data));
-      // dispatch(setStage("result"));
+
+      handleCaptureResult(newSelections);
     }
   };
 
@@ -53,18 +57,18 @@ const VehicleSelectionPage = () => {
       console.error("Failed to capture result:", error);
     }
   };
-  
+
   return (
     <div className=" vehicle-selection">
-       <ToastContainer />
+      <ToastContainer />
       <div className="description">
         <h1>Select a Vehicle</h1>
         <p>Select a vehicle for {currentCop} to use.</p>
       </div>
       <div className="carousel">
         {vehicles.map((vehicle) => (
-          <div key={vehicle.kind} onClick={() => handleVehicleSelect(vehicle)}>
-            <h2>{vehicle.kind}</h2>
+          <div key={vehicle.name} onClick={() => handleVehicleSelect(vehicle)}>
+            <h2>{vehicle.name}</h2>
           </div>
         ))}
       </div>
