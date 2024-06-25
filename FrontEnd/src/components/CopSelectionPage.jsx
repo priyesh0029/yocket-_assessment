@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setStage,
@@ -28,6 +28,7 @@ const CopSelectionPage = ({
   );
 
   const [animationClass, setAnimationClass] = useState("");
+  const carouselRef = useRef(null);
 
   const selectionFunction = (info) => {
     setAnimationClass("page-leave");
@@ -112,7 +113,10 @@ const CopSelectionPage = ({
 
   useEffect(() => {
     setAnimationClass("page-enter");
-  }, [currPage]);
+    if (carouselRef.current) {
+      carouselRef.current.moveTo(0);
+    }
+  }, [currPage, pageInfo]);
 
   return (
     <div
@@ -162,6 +166,7 @@ const CopSelectionPage = ({
         {/* Right side */}
         <div className="md:w-2/3 w-full md:h-full h-1/2 flex items-center justify-center">
           <Carousel
+            ref={carouselRef}
             showThumbs={false}
             infiniteLoop={true}
             showStatus={false}
@@ -226,5 +231,7 @@ const CopSelectionPage = ({
 };
 
 export default CopSelectionPage;
+
+
 
 
