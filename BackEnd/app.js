@@ -15,8 +15,8 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 
-app.use("/", dataRoutes);
-app.use("/", captureRoutes);
+app.use("/api/", dataRoutes);
+app.use("/api/", captureRoutes);
 
 if (process.env.NODE_ENV !== "test") {
   server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
