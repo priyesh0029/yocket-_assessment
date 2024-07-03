@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCities, setVehicles } from "./store/slices/gameSlice";
+import { setCities, setPlaces, setVehicles } from "./store/slices/gameSlice";
 import LandingPage from "./components/LandingPage";
 import CopSelectionPage from "./components/CopSelectionPage";
 import "./App.css";
@@ -12,12 +12,16 @@ import { copsDescription, copsInfo } from "./constants/copsPageDetails";
 import { cityDescription } from "./constants/cityDetails";
 import { vehicleDescription } from "./constants/vehicleDetails";
 import ResultPage from "./components/ResultPage";
+import { getPlacesData } from "./services/homeApis/getPlaces";
+import { placeDescription } from "./constants/placeDetails";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { stage, cities ,vehicles} = useSelector((state) => state.game);
+  const { stage, cities ,vehicles,places} = useSelector((state) => state.game);
   const cityErrorShown = useRef(false);
   const vehicleErrorShown = useRef(false);
+  const PlacesErrorShown = useRef(false);
+
 
   useEffect(() => {
     const handleGetCities = async () => {
@@ -46,8 +50,22 @@ const App = () => {
       }
     };
 
+    const handleGetPlaces = async () => {
+      try {
+        const response = await getPlacesData();
+        dispatch(setPlaces(response.data));
+        PlacesErrorShown.current = false;
+      } catch (error) {
+        if (!vehicleErrorShown.current) {
+          toast.error(`Failed to fetch places: ${error.message}`);
+          PlacesErrorShown.current = true;
+        }
+      }
+    };
+
     handleGetCities();
     handleGetVehicles();
+    handleGetPlaces()
   }, [dispatch]);
 
   const renderStage = () => {
@@ -69,9 +87,19 @@ const App = () => {
           <CopSelectionPage
             currPage={"citySelection"}
             prevPage={"copSelection"}
-            nextPage={"vehicleSelection"}
+            nextPage={"placeSelection"}
             pageInfo={cities}
             pageDesc={cityDescription}
+          />
+        );
+        case "placeSelection":
+        return (
+          <CopSelectionPage
+            currPage={"placeSelection"}
+            prevPage={"citySelection"}
+            nextPage={"vehicleSelection"}
+            pageInfo={places}
+            pageDesc={placeDescription}
           />
         );
       case "vehicleSelection":

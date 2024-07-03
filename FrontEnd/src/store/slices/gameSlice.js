@@ -6,6 +6,7 @@ const initialState = {
   currentCop: null,
   cities: [],
   vehicles: [],
+  places :[],
   result: null,
 };
 
@@ -25,6 +26,9 @@ export const gameSlice = createSlice({
     setCities: (state, action) => {
       state.cities = action.payload;
     },
+    setPlaces: (state, action) => {
+      state.places = action.payload;
+    },
     setVehicles: (state, action) => {
       state.vehicles = action.payload;
     },
@@ -39,6 +43,7 @@ export const {
   setCopSelections,
   setCurrentCop,
   setCities,
+  setPlaces,
   setVehicles,
   setResult,
 } = gameSlice.actions;

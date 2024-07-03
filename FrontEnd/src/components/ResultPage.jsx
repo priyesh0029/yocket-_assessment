@@ -58,7 +58,7 @@ const ResultPage = () => {
               />
               <p className="md:text-xl text-md font-medium mt-8 text-white bg-black bg-opacity-55 p-2 rounded-xl">
                 {result.success
-                  ? `The fugitive was captured by ${result.cop} from the city ${result.city}.`
+                  ? `The fugitive was captured by ${result.cop} from a ${result.place} at city ${result.city}.`
                   : "The fugitive was not captured."}
               </p>
               <button

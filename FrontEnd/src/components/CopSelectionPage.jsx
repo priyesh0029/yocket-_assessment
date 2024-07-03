@@ -26,9 +26,23 @@ const CopSelectionPage = ({
   const { currentCop, copSelections, cities } = useSelector(
     (state) => state.game
   );
-
+  
   const [animationClass, setAnimationClass] = useState("");
   const carouselRef = useRef(null);
+
+
+  const existsInArray = (arr, objName) => {
+    return arr.some((item) => item.copName === objName);
+  };
+  
+  if (currPage === "copSelection") {
+    pageInfo = pageInfo.filter(
+      (copPage) => !existsInArray(copSelections, copPage.name)
+    );
+    console.log("copPageInfo after filtration : ",pageInfo);
+    
+  }
+  
 
   const selectionFunction = (info) => {
     setAnimationClass("page-leave");
@@ -39,6 +53,8 @@ const CopSelectionPage = ({
         dispatch(setStage(nextPage));
       } else if (currPage === "citySelection") {
         handleCitySelect(info.name);
+      } else if (currPage === "placeSelection") {
+        handlePlaceSubmit(info.name);
       } else if (currPage === "vehicleSelection") {
         const selection = handleSelection(
           currentCop,
@@ -53,7 +69,7 @@ const CopSelectionPage = ({
         }
       }
       setAnimationClass("page-enter");
-    }, 500); 
+    }, 500);
   };
 
   const handleCitySelect = (city) => {
@@ -72,6 +88,16 @@ const CopSelectionPage = ({
       (copInfo) => copInfo.copName !== currentCop
     );
     const newSelections = [...existingCop, { copName: currentCop, city: city }];
+    dispatch(setCopSelections(newSelections));
+    dispatch(setStage(nextPage));
+  };
+
+  const handlePlaceSubmit = (place) => {
+    const newSelections = copSelections.map((selection) =>
+      selection.copName === currentCop
+        ? { ...selection, place: place }
+        : selection
+    );
     dispatch(setCopSelections(newSelections));
     dispatch(setStage(nextPage));
   };
@@ -155,7 +181,8 @@ const CopSelectionPage = ({
                   className="text-yellow-900 text-xs text-center  bg-black bg-opacity-70 rounded-xl p-2"
                 >
                   <span className="text-md text-white">{index + 1}</span> . Name
-                  : {copInfo.copName},Investigating City : {copInfo.city}
+                  : {copInfo.copName},Investigating City : {copInfo.city},Hiding
+                  place inside city :{copInfo.place}
                   ,choosed vehicle : {copInfo.vehicle}
                 </p>
               ))}
@@ -182,7 +209,7 @@ const CopSelectionPage = ({
               >
                 <img
                   src={
-                    currPage === "copSelection"
+                    currPage === "copSelection" || currPage === "placeSelection"
                       ? info.image
                       : `${CLOUD_URL + info.image}`
                   }
@@ -201,24 +228,27 @@ const CopSelectionPage = ({
                     <p className="text-white text-md sm:text-xl md:text-2xl lg:text-3xl font-bold">
                       {info.name}
                     </p>
-                    {currPage !== "copSelection" && (
-                      <div className="text-white mt-12 sm:mt-16 md:mt-36 bg-black bg-opacity-35 rounded-xl py-2">
-                        <p className="text-white text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold">
-                          {info.subHead}
-                        </p>
-                        {currPage === "citySelection" && (
-                          <p className="text-white text-xs mt-2">
-                            {info.desc}
+                    {currPage !== "copSelection" ||
+                      (currPage !== "placeSelection" && (
+                        <div className="text-white mt-12 sm:mt-16 md:mt-36 bg-black bg-opacity-35 rounded-xl py-2">
+                          <p className="text-white text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold">
+                            {info.subHead}
                           </p>
-                        )}
-                        {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        <p className="text-white font-semibold text-sm md:text-md mt-2 px-2">
-                          {currPage === "citySelection"
-                            ? `${info.distance}km from the cop's location`
-                            : `This ${info.name} has ${info.range} Kms range`}
-                        </p>
-                      </div>
-                    )}
+                          {currPage === "citySelection" && (
+                            <p className="text-white text-xs mt-2">
+                              {info.desc}
+                            </p>
+                          )}
+                          {/* eslint-disable-next-line react/no-unescaped-entities */}
+                          <p className="text-white font-semibold text-sm md:text-md mt-2 px-2">
+                            {currPage === "citySelection"
+                              ? `${info.distance}km from the cop's location`
+                              : currPage === "vehicleSelection"
+                              ? `This ${info.name} has ${info.range} Kms range`
+                              : ""}
+                          </p>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -231,7 +261,3 @@ const CopSelectionPage = ({
 };
 
 export default CopSelectionPage;
-
-
-
-

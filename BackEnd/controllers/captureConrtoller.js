@@ -1,4 +1,5 @@
 import cities from "../config/cities.js";
+import places from "../config/places.js";
 
 export const captureFugitive = (req, res) => {
   const copsSelections = req.body;
@@ -11,11 +12,13 @@ export const captureFugitive = (req, res) => {
   }
 
   const fugitiveCity = cities[Math.floor(Math.random() * cities.length)];
+  const fugitivePlace = places[Math.floor(Math.random() * places.length)];
   // console.log("fugitiveCity : ", fugitiveCity);
-  const result = copsSelections.find((cop) => cop.city === fugitiveCity.name);
+   const result = copsSelections.find((cop) => cop.city === fugitiveCity.name && cop.place === fugitivePlace.name);
+ 
 
   if (result) {
-    res.json({ success: true, cop: result.copName ,city: result.city});
+    res.json({ success: true, cop: result.copName ,city: result.city,place: result.place});
   } else {
     res.json({ success: false });
   }
