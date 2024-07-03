@@ -1,5 +1,5 @@
 export const placeDescription = {
-    title: "Select a place",
+    title: "Select a Place",
     // eslint-disable-next-line no-undef
-    desc: `Select a place for hide for the fugitive from current city.`,
+    desc: `Choose a location in the city where the fugitive could be hiding.`,
   };

@@ -106,7 +106,7 @@ const App = () => {
         return (
           <CopSelectionPage
             currPage={"vehicleSelection"}
-            prevPage={"citySelection"}
+            prevPage={"placeSelection"}
             nextPage={"result"}
             pageInfo={vehicles}
             pageDesc={vehicleDescription}

@@ -26,7 +26,7 @@ const CopSelectionPage = ({
   const { currentCop, copSelections, cities } = useSelector(
     (state) => state.game
   );
-  
+
   const [animationClass, setAnimationClass] = useState("");
   const carouselRef = useRef(null);
 
@@ -228,8 +228,7 @@ const CopSelectionPage = ({
                     <p className="text-white text-md sm:text-xl md:text-2xl lg:text-3xl font-bold">
                       {info.name}
                     </p>
-                    {currPage !== "copSelection" ||
-                      (currPage !== "placeSelection" && (
+                    {currPage !== "copSelection" ||  currPage === "placeSelection" && (
                         <div className="text-white mt-12 sm:mt-16 md:mt-36 bg-black bg-opacity-35 rounded-xl py-2">
                           <p className="text-white text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold">
                             {info.subHead}
@@ -248,7 +247,7 @@ const CopSelectionPage = ({
                               : ""}
                           </p>
                         </div>
-                      ))}
+                      )}
                   </div>
                 </div>
               </div>
